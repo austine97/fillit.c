@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 16:19:50 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/11/29 17:02:38 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/11/29 17:19:34 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ char	**resolve_recursive(char **tab, int n, int used_points, t_tetri *tetriminos
 			}
 			if (test_position(tetriminos[x], i, j, tab) == 0)
 				tab = draw_tetriminos(tetriminos[x], i, j, tab);
+
 		}
 	}
 	else
