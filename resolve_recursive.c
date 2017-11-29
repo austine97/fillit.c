@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 16:19:50 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/11/29 16:59:30 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/11/29 17:02:38 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ int		test_position(t_tetri tetriminos, int i, int j, char **tab)
 					n++;
 				if (tetriminos->coord[k] == 'D' && tab[m][n])
 					m++;
+				if (tetriminos->coord[k] == 'L' && tab[m][n])
+					n--;
 				if (tetriminos->coord[k] == 'Z' && tab[m][n])
 				{
 					m++;
@@ -144,6 +146,8 @@ char	**draw_tetriminos(t_tetri tetriminos, int i, int j, char **tab)
 				n++;
 			if (tetriminos->coord[k] == 'D' && tab[m][n])
 				m++;
+			if (tetriminos->coord[k] == 'L' && tab[m][n])
+				n--;
 			if (tetriminos->coord[k] == 'Z' && tab[m][n])
 			{
 				m++;
