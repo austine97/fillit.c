@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 18:35:43 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/11/29 13:38:17 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/11/29 20:49:29 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,13 @@ typedef	struct	s_tetri
 	int		length;
 	int		height;
 }				t_tetri;
+
+typedef struct s_list
+{
+	int a;
+	int b;
+	int c;
+	int d;
+}				t_list;
 
 #endif
