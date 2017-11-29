@@ -6,11 +6,13 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 16:19:50 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/11/29 17:19:34 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/11/29 20:41:39 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+// F: renvoie le sqrt en int (arrondi).
 
 int		ft_sqrt_improved(int nb)
 {
@@ -36,6 +38,8 @@ int		used_points(int highest_size, int nbr_highest_size, int n, int nbr_tetrimin
 	return (used_points);
 }
 
+// F: calcul et renvoie le cote du plus petit carre possible , en prenant en compte le nbr de tetriminos.
+
 int		size_square(int nbr_tetriminos, int highest_size, int longuest_size)
 {
 	int n;
@@ -50,7 +54,9 @@ int		size_square(int nbr_tetriminos, int highest_size, int longuest_size)
 	return (n);
 }
 
-char	**tab(int n, int used_points)
+// F: fonction qui cree un tableau **tab, qui contient used_points '.' utilisable dans l'algo.
+
+char	**ft_tab(int n, int used_points)
 {
 
 	int		i;
@@ -84,6 +90,8 @@ char	**tab(int n, int used_points)
 	return (tab);
 }
 
+// F: fonction qui test si un tetriminos peut etre placer ou non dans le tableau.
+
 int		test_position(t_tetri tetriminos, int i, int j, char **tab)
 {
 	int		count;
@@ -103,18 +111,18 @@ int		test_position(t_tetri tetriminos, int i, int j, char **tab)
 				break ;
 			if (k <= 2)
 			{
-				if (tetriminos->coord[k] == 'R' && tab[m][n])
+				if (tetriminos.coord[k] == 'R' && tab[m][n])
 					n++;
-				if (tetriminos->coord[k] == 'D' && tab[m][n])
+				if (tetriminos.coord[k] == 'D' && tab[m][n])
 					m++;
-				if (tetriminos->coord[k] == 'L' && tab[m][n])
+				if (tetriminos.coord[k] == 'L' && tab[m][n])
 					n--;
-				if (tetriminos->coord[k] == 'Z' && tab[m][n])
+				if (tetriminos.coord[k] == 'Z' && tab[m][n])
 				{
 					m++;
 					n--;
 				}
-				if (tetriminos->coord[k] == 'X' && tab[m][n])
+				if (tetriminos.coord[k] == 'X' && tab[m][n])
 				{
 					m++;
 					n++;
@@ -127,6 +135,8 @@ int		test_position(t_tetri tetriminos, int i, int j, char **tab)
 	else
 		return (1);
 }
+
+// F: fonction qui place les tetriminos dans un tableau **tab.
 
 char	**draw_tetriminos(t_tetri tetriminos, int i, int j, char **tab)
 {
@@ -142,18 +152,18 @@ char	**draw_tetriminos(t_tetri tetriminos, int i, int j, char **tab)
 		tab[m][n] = '#';
 		if (k <= 2)
 		{
-			if (tetriminos->coord[k] == 'R' && tab[m][n])
+			if (tetriminos.coord[k] == 'R' && tab[m][n])
 				n++;
-			if (tetriminos->coord[k] == 'D' && tab[m][n])
+			if (tetriminos.coord[k] == 'D' && tab[m][n])
 				m++;
-			if (tetriminos->coord[k] == 'L' && tab[m][n])
+			if (tetriminos.coord[k] == 'L' && tab[m][n])
 				n--;
-			if (tetriminos->coord[k] == 'Z' && tab[m][n])
+			if (tetriminos.coord[k] == 'Z' && tab[m][n])
 			{
 				m++;
 				n--;
 			}
-			if (tetriminos->coord[k] == 'X' && tab[m][n])
+			if (tetriminos.coord[k] == 'X' && tab[m][n])
 			{
 				m++;
 				n++;
@@ -163,6 +173,8 @@ char	**draw_tetriminos(t_tetri tetriminos, int i, int j, char **tab)
 	}
 	return (tab);
 }
+
+// F: parcours le tableau jusqu'a arriver sur une case qui contient un point.
 
 void	find_next_point(int i, int j, char **tab)
 {
@@ -175,52 +187,117 @@ void	find_next_point(int i, int j, char **tab)
 			i++;
 			j = 0;
 		}
-	} // avance jusqua rencontrer un espace non utiliser
+	} 
 	i--;
-	j--;
+	j--; // decrementation pour economisez de la place pour la norme.
+}
+
+// F: fonction auxiliaire qui va essayer de poser les tetriminos compris entre 0 et x.
+
+void	combination_help(t_tetri *tetriminos, char **str, t_list S)
+{
+	int k;
+	int z;
+	int i;
+	int j;
+
+	z = 0;
+	k = -1;
+	i = S.a;
+	j = S.b;
+	find_next_point(i, j, str);
+	while (++k <= S.d) // boucle allant de 0 a la valeur stocker de x.
+	{
+		while (test_position(tetriminos[k], ++i, ++j, str) == 1 && str[i][j] != 'P')
+		{
+			while (++j < n && str[i][j])
+			{
+				if (test_position(tetriminos[k], i, j, str) == 0)
+				{
+					z = 1;
+					break ;
+				}
+			}
+			j = -1;
+			if (z == 1)
+				break ;
+		}
+		if (test_position(tetriminos[k], i, j, str) == 0 && S.c++)
+			str = draw_tetriminos(tetriminos[k], i, j, str);
+		else
+			break ;
+	}
+}
+
+// F: fonction recursive qui va essayer toutes les combinaisons de tetriminos , ou presque...
+
+char	**combination_recursive(t_tetri *tetriminos, int k, int x, char **str)
+{
+	int 	i;
+	int 	j;
+	int 	z;
+	t_list	S; // structure contenant 4 int pour la norme
+	char	**save; //  un **tab qui va sauvegarde le contenu de str a chaque recursivite
+
+	i = 0;
+	j = 0;
+	z = 0;
+	ft_strcpy_improved(save, str); // cette fonction copie le contenu d'un **tab dans un autre XD
+	S.c = 0; // variable qui compte le nombre de tetriminos "place".
+	S.d = x; // stock la valeur de x avant le debut de la boucle
+	k = tetriminos.nbr - x;
+	find_next_point(i, j, str); // avance jusqua rencontrer un espace non utiliser
+	while (++x < tetriminos.nbr)
+	{
+		while (test_position(tetriminos[x], ++i, ++j, str) == 1 && str[i][j] != 'P')
+		{
+			while (++j < n && str[i][j])
+			{
+				if (test_position(tetriminos[x], i, j, str) == 0)
+				{
+					z = 1;
+					break ;
+				}
+			}
+			j = -1;
+			if (z == 1)
+				break ;
+		}		
+		if (test_position(tetriminos[x], i, j, str) == 0 && S.c++)
+			str = draw_tetriminos(tetriminos[x], i, j, str);
+		else
+			break ;
+	}
+	if (k != tetriminos.nbr && x == tetriminos.nbr) // vrai si on a placer tout les tetriminos entre x et tetri.nbr
+	{
+		S.a = i;
+		S.b = j;
+		combination_help(tetriminos, x, str, S);
+	}
+	if (S.c == tetriminos.nbr) // vrai si toutes les pieces sont placer
+		return (str);
+	else if (x == tetriminos.nbr) // vrai apres avoir essayer toutes les possibilites sans resultats
+		return (NULL);
+	else
+		return (combination_recursive(tetriminos, x + 1, save)); // recursivite 
 }
 
 char	**resolve_recursive(char **tab, int n, int used_points, t_tetri *tetriminos)
 {
-	int i;
-	int j;
-	int k;
-	int x;
-	int y;
+	int		x;
+	char	**str;
+	int		k;
 
 	x = -1;
+	k = 0;
+	tab = NULL;
+	str = ft_tab(n, used_points);
 	if (used_points <= n * n)
-	{
-		while (tab[i][j])
-		{
-			i = 0;
-			j = 0;
-			k = 0;
-			x++;
-			find_next_point(i, j, tab); // avance jusqua rencontrer un espace non utiliser 
-			while (test_position(tetriminos[x], ++i, ++j, tab) == 1 && tab[i][j] != 'P')
-			{
-				while (++j < n && tab[i][j])
-				{
-					if (test_position(tetriminos[x], i, j, tab) == 0)
-						break ;
-				}
-				j = -1;
-			}
-			if (test_position(tetriminos[x], i, j, tab) == 0)
-				tab = draw_tetriminos(tetriminos[x], i, j, tab);
-
-		}
-	}
+		tab = combination_recursive(tetrminos, k, x, str); // tab prend NULL ou la solution optimal.
 	else
-		n++;
-	ft_strdel(tab);
-	return (resolve_recursive(tab(n, used_points + 1), n, used_point + 1, tetriminos);
-			}
-
-			int		main(void)
-			{
-			ft_putnbr(ft_sqrt_improved(26));
-			return (0);
-			}
-
+		n++; // incrementation du carre si trop petit.
+	if (tab != NULL)
+		return (tab);
+	else
+		return (resolve_recursive(ft_tab(n, used_points + 1), n, used_point + 1, tetriminos)); // recursive
+}
