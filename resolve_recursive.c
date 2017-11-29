@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 16:19:50 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/11/29 13:38:13 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/11/29 16:59:30 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,112 @@ char	**tab(int n, int used_points)
 	}
 	i = -1;
 	j = -1;
-	k = 0;
+	k = -1;
 	while (tab[++i])
 	{
-		while (k < used_points && tab[i][++j])
-		{
+		while (++k < used_points && tab[i][++j])
 			tab[i][j] = '.';
-			k++;
+		if (k >= used_points)
+		{
+			k--;
+			while (++k < (n * n - usedpoints) && tab[i][++j])
+				tab[i][j] = 'P';
 		}
 		j = 0;
 	}
 	return (tab);
+}
+
+int		test_position(t_tetri tetriminos, int i, int j, char **tab)
+{
+	int		count;
+	int		k;
+	int		m;
+	int		n;
+
+	k = 0;
+	m = i;
+	n = j;
+	count = -1;.
+		while (++count <= 3 && tab[m][n])
+		{
+			if (tab[m][n] == '.')
+				count++;
+			else
+				break ;
+			if (k <= 2)
+			{
+				if (tetriminos->coord[k] == 'R' && tab[m][n])
+					n++;
+				if (tetriminos->coord[k] == 'D' && tab[m][n])
+					m++;
+				if (tetriminos->coord[k] == 'Z' && tab[m][n])
+				{
+					m++;
+					n--;
+				}
+				if (tetriminos->coord[k] == 'X' && tab[m][n])
+				{
+					m++;
+					n++;
+				}
+				k++;
+			}
+		}
+	if (count == 4)
+		return (0);
+	else
+		return (1);
+}
+
+char	**draw_tetriminos(t_tetri tetriminos, int i, int j, char **tab)
+{
+	int k;
+	int m;
+	int n;
+
+	m = i;
+	n = j;
+	k = 0;
+	while (k <= 3)
+	{
+		tab[m][n] = '#';
+		if (k <= 2)
+		{
+			if (tetriminos->coord[k] == 'R' && tab[m][n])
+				n++;
+			if (tetriminos->coord[k] == 'D' && tab[m][n])
+				m++;
+			if (tetriminos->coord[k] == 'Z' && tab[m][n])
+			{
+				m++;
+				n--;
+			}
+			if (tetriminos->coord[k] == 'X' && tab[m][n])
+			{
+				m++;
+				n++;
+			}
+		}
+		k++;
+	}
+	return (tab);
+}
+
+void	find_next_point(int i, int j, char **tab)
+{
+	while (tab[i][j] != '.' && tab[i][j])
+	{
+		while (tab[i][j] != '.' && tab[i + 1][j + 1])
+			j++;
+		if (tab[i][j] != '.')
+		{
+			i++;
+			j = 0;
+		}
+	} // avance jusqua rencontrer un espace non utiliser
+	i--;
+	j--;
 }
 
 char	**resolve_recursive(char **tab, int n, int used_points, t_tetri *tetriminos)
@@ -92,45 +187,35 @@ char	**resolve_recursive(char **tab, int n, int used_points, t_tetri *tetriminos
 	x = -1;
 	if (used_points <= n * n)
 	{
-		while (tab[i][j] == '.')
+		while (tab[i][j])
 		{
 			i = 0;
 			j = 0;
 			k = 0;
 			x++;
-			while (tab[i][j] != '.' && tab[i + 1][j + 1])
-				j++;
-			if (tab[i][j] != '.')
+			find_next_point(i, j, tab); // avance jusqua rencontrer un espace non utiliser 
+			while (test_position(tetriminos[x], ++i, ++j, tab) == 1 && tab[i][j] != 'P')
 			{
-				i++;
-				j = 0;
-			}
-			y = 0;
-			while (k != 3 && tab[i][j] == '.') /*poser le premier tetriminos*/
-			{
-				tab[i][j] = '#';
-				y++;
-				if (tetriminos[x]->coord[k] == 'R' && tab[i][j])
-					j++;
-				if (tetriminos[x]->coord[k] == 'L' && tab[i][j])
-					j--;
-				if (tetriminos[x]->coord[k] == 'D' && tab[i][j])
-					i++;
-				k++;
-			}
-			if (y != 4)
-				
-			
-		}
-		else
-			n++;
-		ft_strdel(tab);
-		return (resolve_recursive(tab(n, used_points + 1), n, used_point + 1, tetriminos);
-				}
-
-				int		main(void)
+				while (++j < n && tab[i][j])
 				{
-				ft_putnbr(ft_sqrt_improved(26));
-				return (0);
+					if (test_position(tetriminos[x], i, j, tab) == 0)
+						break ;
 				}
+				j = -1;
+			}
+			if (test_position(tetriminos[x], i, j, tab) == 0)
+				tab = draw_tetriminos(tetriminos[x], i, j, tab);
+		}
+	}
+	else
+		n++;
+	ft_strdel(tab);
+	return (resolve_recursive(tab(n, used_points + 1), n, used_point + 1, tetriminos);
+			}
+
+			int		main(void)
+			{
+			ft_putnbr(ft_sqrt_improved(26));
+			return (0);
+			}
 
