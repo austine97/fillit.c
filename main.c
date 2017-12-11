@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:53:35 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/04 21:06:26 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/11 20:45:27 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,13 @@ int		main(int argc, char **argv)
 	if ((pdt = ft_create_table(buf, ret)) == 0)
 		return (0);
 	check_valid(argc, argv);
+	if ((S.triple_tab = malloc(sizeof(S.triple_tab) * 1000)) == 0)
+		return (0);
 	listtetri = ft_ret_tet(buf, ret);
 	ret = ft_find_longest(pdt);
 	fd = ft_find_highest(pdt);
 	n = size_square(listtetri[0].nbr, fd, ret);
-	used_point = used_points(fd, n, ret);
+	used_point = used_points(fd, n, listtetri[0].nbr);
 	pdt = resolve_recursive(S , n, used_point, listtetri);
 	ft_putstr_improved(pdt);
 	return (0);

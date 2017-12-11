@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 16:19:50 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/04 21:33:40 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/11 20:57:13 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	***combination_recursive(t_tetri *tetriminos, t_misc S, int x, char **str)
 	int 	i;
 	int 	j;
 	int 	k;
-	int	z;
+	int		z;
 	char	**save; //  un **tab qui va sauvegarde le contenu de str a chaque recursivite
 
 	i = 0;
@@ -116,8 +116,11 @@ char	***combination_recursive(t_tetri *tetriminos, t_misc S, int x, char **str)
 				break ;
 		}
 		i = 0;
-		if (test_position(tetriminos[x], i, j, str) == 0 && S.c++)
+		if (test_position(tetriminos[x], i, j, str) == 0)
+		{
+			S.c++;
 			str = draw_tetriminos(tetriminos[x], i, j, str);
+		}	
 		else
 			break ;
 		x++;
@@ -129,16 +132,23 @@ char	***combination_recursive(t_tetri *tetriminos, t_misc S, int x, char **str)
 		combination_help(tetriminos, str, S);
 	}
 	if (S.c == tetriminos[0].nbr) // vrai si toutes les pieces sont placer
-		S.triple_tab[++S.e] = malloc_copy_tab(S.triple_tab[S.e], S.n, str);
-	if (S.e != 0 && x == tetriminos[0].nbr)
+	{
+		S.e++;
+		if ((S.triple_tab[S.e] = malloc_copy_tab(S.n, str)) == NULL)
+			return (NULL);
+	}
+	if (S.e >= 0 && S.d == tetriminos[0].nbr)
 	{
 		S.triple_tab[++S.e] = NULL;	
 		return (S.triple_tab);
 	}
-	else if (x == tetriminos[0].nbr) // vrai apres avoir essayer toutes les possibilites sans resultats
+	else if (S.d == tetriminos[0].nbr) // vrai apres avoir essayer toutes les possibilites sans resultats
 		return (NULL);
 	else
+	{
+	//	ft_putstr_improved(str);
 		return (combination_recursive(tetriminos, S, x + 1, save)); // recursivite 
+	}
 }
 
 // retroune la solution la plus en haut a gauche parmis toute les solutions entre en parametres 
@@ -186,12 +196,11 @@ char	**resolve_recursive(t_misc S, int n, int used_points, t_tetri *tetriminos)
 		S.triple_tab = combination_recursive(tetriminos, S, x, str); // tab prend NULL ou la solution optimal.
 	else
 		n++; // incrementation du carre si trop petit.
-
 	if (S.triple_tab != NULL)
 	{
 		str = best_solution(S.triple_tab, n);
 		return (str);
 	}
 	else
-		return (resolve_recursive(S, n, used_points + n, tetriminos)); // recursive
+		return (resolve_recursive(S, n, used_points + n - 1, tetriminos)); // recursive
 }

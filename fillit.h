@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 18:35:43 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/04 20:31:55 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/11 20:47:30 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int			ft_sqrt_improved(int nb);
 int			size_square(int nbr_tetriminos, int highest_size, int longest_size);
 int			used_points(int highest_size, int n, int nbr_tetriminos);
 char		**ft_tab(int n, int used_points);
-char		**malloc_copy_tab(char **tab, int n, char **str);
+char		**malloc_copy_tab(int n, char **str);
 void		find_next_point(int i, int j, char **tab);
 int			test_position(t_tetri tetriminos, int i, int j, char **tab);
 char		**draw_tetriminos(t_tetri tetriminos, int i, int j, char **tab);

@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 15:53:28 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/04 21:13:40 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/11 20:45:42 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 
 void	find_next_point(int i, int j, char **tab)
 {
+	if (!tab[i][j])
+	{
+		i++;
+		j = 0;
+	}
 	while (tab[i][j] && tab[i][j] != '.')
 	{
 		while (tab[i + 1][j + 1] && tab[i][j] != '.')
@@ -40,33 +45,33 @@ int		test_position(t_tetri tetriminos, int i, int j, char **tab)
 	m = i;
 	n = j;
 	count = 0;
-		while (count <= 3 && tab[m][n])
+	while (count <= 3 && tab[m][n])
+	{
+		if (tab[m][n] == '.')
+			count++;
+		else
+			break ;
+		if (k <= 2)
 		{
-			if (tab[m][n] == '.')
-				count++;
-			else
-				break ;
-			if (k <= 2)
+			if (tetriminos.coord[k] == 'R' && tab[m][n])
+				n++;
+			if (tetriminos.coord[k] == 'D' && tab[m][n])
+				m++;
+			if (tetriminos.coord[k] == 'L' && tab[m][n])
+				n--;
+			if (tetriminos.coord[k] == 'Z' && tab[m][n])
 			{
-				if (tetriminos.coord[k] == 'R' && tab[m][n])
-					n++;
-				if (tetriminos.coord[k] == 'D' && tab[m][n])
-					m++;
-				if (tetriminos.coord[k] == 'L' && tab[m][n])
-					n--;
-				if (tetriminos.coord[k] == 'Z' && tab[m][n])
-				{
-					m++;
-					n--;
-				}
-				if (tetriminos.coord[k] == 'X' && tab[m][n])
-				{
-					m++;
-					n++;
-				}
-				k++;
+				m++;
+				n--;
 			}
+			if (tetriminos.coord[k] == 'X' && tab[m][n])
+			{
+				m++;
+				n++;
+			}
+			k++;
 		}
+	}
 	if (count == 4)
 		return (0);
 	else
