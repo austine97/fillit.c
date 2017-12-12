@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:53:35 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/11 20:45:27 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/12 22:10:27 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ int		main(int argc, char **argv)
 	int		ret;
 	char	buf[BUF_SIZE + 1];
 	char	**pdt;
-	int		n;
-	int		used_point;
 	t_tetri *listtetri;
 	t_misc	S;
 
@@ -30,21 +28,18 @@ int		main(int argc, char **argv)
 	S.c = 0;
 	S.d = 0;
 	S.e = -1;
-	S.triple_tab = NULL;
 	fd = open(argv[1], O_RDONLY);
 	ret = read(fd, buf, BUF_SIZE);
 	buf[ret] = '\0';
 	if ((pdt = ft_create_table(buf, ret)) == 0)
 		return (0);
-	check_valid(argc, argv);
-	if ((S.triple_tab = malloc(sizeof(S.triple_tab) * 1000)) == 0)
-		return (0);
+	if (check_valid(argc, argv) == 1)
+		return (1);
 	listtetri = ft_ret_tet(buf, ret);
 	ret = ft_find_longest(pdt);
 	fd = ft_find_highest(pdt);
-	n = size_square(listtetri[0].nbr, fd, ret);
-	used_point = used_points(fd, n, listtetri[0].nbr);
-	pdt = resolve_recursive(S , n, used_point, listtetri);
+	S.n = size_square(listtetri[0].nbr, fd, ret);
+	pdt = resolve_recursive(S, listtetri);
 	ft_putstr_improved(pdt);
 	return (0);
 }

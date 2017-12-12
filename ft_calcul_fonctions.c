@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:20:50 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/11 20:57:16 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/12 21:43:27 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,6 @@ int		size_square(int nbr_tetriminos, int highest_size, int longest_size)
 	return (n);
 }
 
-int		used_points(int highest_size, int n, int nbr_tetriminos)
-{
-	int used_points;
-
-	used_points = n * highest_size;
-	if ((nbr_tetriminos * 4) > used_points)
-		used_points = nbr_tetriminos * 4;
-	ft_putnbr(highest_size);
-	ft_putchar('\n');
-	ft_putnbr(used_points);
-	ft_putchar('\n');
-	ft_putnbr(nbr_tetriminos);
-	ft_putchar('\n');
-	return (used_points);
-}
 char	*ft_tab_improved(int n, int used_points)
 {
 	int i;
@@ -73,10 +58,8 @@ char	*ft_tab_improved(int n, int used_points)
 			buf[i - 1] = '\n';
 			k++;
 		}
-		else if (i < used_points + k)
-			buf[i - 1] = '.';
 		else
-			buf[i - 1] = 'P';
+			buf[i - 1] = '.';
 		j = 1;
 		i++;
 	}

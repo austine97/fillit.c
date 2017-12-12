@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 18:35:43 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/11 20:47:30 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/12 21:28:22 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,16 @@ int			ft_find_highest(char **pdt);
 
 int			ft_sqrt_improved(int nb);
 int			size_square(int nbr_tetriminos, int highest_size, int longest_size);
-int			used_points(int highest_size, int n, int nbr_tetriminos);
-char		**ft_tab(int n, int used_points);
+char		**ft_tab(int n);
 char		**malloc_copy_tab(int n, char **str);
 void		find_next_point(int i, int j, char **tab);
 int			test_position(t_tetri tetriminos, int i, int j, char **tab);
 char		**draw_tetriminos(t_tetri tetriminos, int i, int j, char **tab);
 char		**ft_strcpy_improved(char **dest, char **tab);
 void		combination_help(t_tetri *tetriminos, char **str, t_misc S);
-char		***combination_recursive(t_tetri *tetriminos, t_misc S, int x, char **str);
+char		**combination_recursive(t_tetri *tetriminos, t_misc S, char **str);
 char		**best_solution(char ***Striple_tab, int n);
-char		**resolve_recursive(t_misc S, int n, int used_points, t_tetri *tetriminos);
+char		**resolve_recursive(t_misc S, t_tetri *tetriminos);
 void		ft_putstr_improved(char **pdt);
 
 #endif
