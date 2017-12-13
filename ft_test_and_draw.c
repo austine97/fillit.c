@@ -6,35 +6,36 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 15:53:28 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/12 22:01:06 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/13 19:53:32 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "fillit.h"
 
-void	find_next_point(int i, int j, char **tab)
+t_misc	find_next_point(t_misc S, char **tab)
 {
-	if (!tab[i][j])
+	if (!tab[S.a][S.b])
 	{
-		i++;
-		j = 0;
+		S.a++;
+		S.b = 0;
 	}
-	while (tab[i][j] && tab[i][j] != '.')
+	while (tab[S.a][S.b] && tab[S.a][S.b] != '.')
 	{
-		while (tab[i + 1][j + 1] && tab[i][j] != '.')
-			j++;
-		if (tab[i][j] != '.')
+		while (tab[S.a + 1][S.b + 1] && tab[S.a][S.b] != '.')
+			S.b++;
+		if (tab[S.a][S.b] != '.')
 		{
-			i++;
-			j = 0;
+			S.a++;
+			S.b = 0;
 		}
-	} 
+	}
+	return (S);
 }
 
 // fonction qui test si un tetriminos peut etre placer dans le tableau
 
-int		test_position(t_tetri tetriminos, int i, int j, char **tab)
+int		test_position(t_tetri tetriminos, t_misc S, char **tab)
 {
 	int		count;
 	int		k;
@@ -42,10 +43,10 @@ int		test_position(t_tetri tetriminos, int i, int j, char **tab)
 	int		n;
 
 	k = 0;
-	m = i;
-	n = j;
+	m = S.a;
+	n = S.b;
 	count = 0;
-	while (count <= 3 && tab[m][n])
+	while (count <= 3 && m < S.n && n < S.n)
 	{
 		if (tab[m][n] == '.')
 			count++;
@@ -91,7 +92,7 @@ char	**draw_tetriminos(t_tetri tetriminos, int i, int j, char **tab)
 	k = 0;
 	while (k <= 3)
 	{
-		tab[m][n] = '#';
+		tab[m][n] = tetriminos.coord[3];
 		if (k <= 2)
 		{
 			if (tetriminos.coord[k] == 'R' && tab[m][n])

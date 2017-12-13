@@ -6,7 +6,7 @@
 /*   By: dhorvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 14:12:40 by dhorvill          #+#    #+#             */
-/*   Updated: 2017/12/04 20:05:41 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/13 13:43:04 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ static t_tetri	*ft_fill_all_tetri(char **pdt, t_tetri *tetriminos, int nbr)
 		tetriminos[i] = ft_fill_tetri(ft_strsplit(pdt[i], '\n'), tetriminos[i]);
 		tetriminos[i] = ft_fill_height(tetriminos[i]);
 		tetriminos[i].nbr = nbr;
+		tetriminos[i].coord[3] = i + 'A';
 		i++;
 	}
 	return (tetriminos);

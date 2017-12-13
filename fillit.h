@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 18:35:43 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/12 21:28:22 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/13 18:15:49 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 typedef	struct	s_tetri
 {
-	char	coord[3];
+	char	coord[4];
 	int		nbr;
 	int		length;
 	int		height;
@@ -40,17 +40,17 @@ t_tetri		*ft_ret_tet(char *buf, int ret);
 int			ft_find_longest(char **p);
 char		**ft_create_table(char *buf, int ret);
 int			ft_find_highest(char **pdt);
-
-
+void		ft_freestr(char **str);
+int			ft_strcmp_improved(char **str, char **tab);
 
 int			ft_sqrt_improved(int nb);
 int			size_square(int nbr_tetriminos, int highest_size, int longest_size);
 char		**ft_tab(int n);
 char		**malloc_copy_tab(int n, char **str);
-void		find_next_point(int i, int j, char **tab);
-int			test_position(t_tetri tetriminos, int i, int j, char **tab);
+t_misc		find_next_point(t_misc S, char **tab);
+int			test_position(t_tetri tetriminos, t_misc S, char **tab);
 char		**draw_tetriminos(t_tetri tetriminos, int i, int j, char **tab);
-char		**ft_strcpy_improved(char **dest, char **tab);
+char		**ft_strcpy_improved(char **dest, char **tab, t_misc S);
 void		combination_help(t_tetri *tetriminos, char **str, t_misc S);
 char		**combination_recursive(t_tetri *tetriminos, t_misc S, char **str);
 char		**best_solution(char ***Striple_tab, int n);
