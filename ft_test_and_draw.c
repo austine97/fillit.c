@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 15:53:28 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/13 19:53:32 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/13 23:00:07 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,14 @@ int		test_position(t_tetri tetriminos, t_misc S, char **tab)
 
 // place le tetriminos dans le tableau **tab.
 
-char	**draw_tetriminos(t_tetri tetriminos, int i, int j, char **tab)
+char	**draw_tetriminos(t_tetri tetriminos, t_misc S, char **tab)
 {
 	int k;
 	int m;
 	int n;
 
-	m = i;
-	n = j;
+	m = S.a;
+	n = S.b;
 	k = 0;
 	while (k <= 3)
 	{
