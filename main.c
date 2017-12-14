@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:53:35 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/12 22:10:27 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/14 18:33:37 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ int		main(int argc, char **argv)
 	fd = ft_find_highest(pdt);
 	S.n = size_square(listtetri[0].nbr, fd, ret);
 	pdt = resolve_recursive(S, listtetri);
-	ft_putstr_improved(pdt);
+	ft_putstr_improved(pdt, S.n + 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 18:35:43 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/13 22:36:19 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/14 17:17:46 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,6 @@ t_misc		ft_find_spot(t_tetri tetriminos, char **tab, t_misc S);
 int			ft_double_test(char **tab, t_misc S, t_tetri *tetriminos);
 char		**combination_recursive(t_tetri *tetriminos, t_misc S, char **str);
 char		**resolve_recursive(t_misc S, t_tetri *tetriminos);
-void		ft_putstr_improved(char **pdt);
+void		ft_putstr_improved(char **pdt, int n);
 
 #endif

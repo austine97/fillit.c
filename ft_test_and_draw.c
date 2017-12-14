@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 15:53:28 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/13 23:00:07 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/14 16:40:38 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 t_misc	find_next_point(t_misc S, char **tab)
 {
-	if (!tab[S.a][S.b])
+	if (tab[S.a][S.b] == 'e')
 	{
 		S.a++;
 		S.b = 0;
 	}
-	while (tab[S.a][S.b] && tab[S.a][S.b] != '.')
+	while (tab[S.a][S.b] != 'e' && tab[S.a][S.b] != '.')
 	{
-		while (tab[S.a + 1][S.b + 1] && tab[S.a][S.b] != '.')
+		while (tab[S.a + 1][S.b + 1] != 'e' && tab[S.a][S.b] != '.')				
 			S.b++;
 		if (tab[S.a][S.b] != '.')
 		{
@@ -33,9 +33,7 @@ t_misc	find_next_point(t_misc S, char **tab)
 	return (S);
 }
 
-// fonction qui test si un tetriminos peut etre placer dans le tableau
-
-int		test_position(t_tetri tetriminos, t_misc S, char **tab)
+int		test_position(t_tetri tetriminos, t_misc S,  char **tab)
 {
 	int		count;
 	int		k;
@@ -46,7 +44,7 @@ int		test_position(t_tetri tetriminos, t_misc S, char **tab)
 	m = S.a;
 	n = S.b;
 	count = 0;
-	while (count <= 3 && m < S.n && n < S.n)
+	while (count <= 3 && tab[m][n])
 	{
 		if (tab[m][n] == '.')
 			count++;
@@ -54,6 +52,11 @@ int		test_position(t_tetri tetriminos, t_misc S, char **tab)
 			break ;
 		if (k <= 2)
 		{
+			if (tetriminos.coord[k] == 'P' && tab[m][n])
+			{
+				n = n - 2;
+				m++;
+			}
 			if (tetriminos.coord[k] == 'R' && tab[m][n])
 				n++;
 			if (tetriminos.coord[k] == 'D' && tab[m][n])
@@ -79,9 +82,7 @@ int		test_position(t_tetri tetriminos, t_misc S, char **tab)
 		return (1);
 }
 
-// place le tetriminos dans le tableau **tab.
-
-char	**draw_tetriminos(t_tetri tetriminos, t_misc S, char **tab)
+char	**draw_tetriminos(t_tetri tetriminos, t_misc S,  char **tab)
 {
 	int k;
 	int m;
@@ -91,10 +92,15 @@ char	**draw_tetriminos(t_tetri tetriminos, t_misc S, char **tab)
 	n = S.b;
 	k = 0;
 	while (k <= 3)
-	{
+	{	
 		tab[m][n] = tetriminos.coord[3];
 		if (k <= 2)
 		{
+			if (tetriminos.coord[k] == 'P' && tab[m][n])
+			{
+				n = n - 2;
+				m++;
+			}
 			if (tetriminos.coord[k] == 'R' && tab[m][n])
 				n++;
 			if (tetriminos.coord[k] == 'D' && tab[m][n])

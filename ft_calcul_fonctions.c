@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:20:50 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/13 15:56:38 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/14 18:48:08 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,38 +40,35 @@ int		size_square(int nbr_tetriminos, int highest_size, int longest_size)
 	return (n);
 }
 
-char	*ft_tab_improved(int n, int used_points)
+char	*ft_tab_improved(int n)
 {
 	int i;
 	int j;
-	int k;
-	char	*buf;
+	char *buf;
 
-	i =  1;
+	i = 1;
 	j = 0;
-	k = 1;
-	buf = ft_strnew(n * n + n + 3);
-	while (i < n * n + n + 1)
+	buf = ft_strnew(12 * 12 + 1);
+	while (i < 12 * 12 - 1)
 	{
-		if (i != 0 && i % (n + j) == 0)
-		{
+		if (i != 0 && i % (12 + j) == 0)
 			buf[i - 1] = '\n';
-			k++;
-		}
-		else
+		else if (i % (12 + j) <= n && i < 12 * n)
 			buf[i - 1] = '.';
+		else
+			buf[i - 1] = 'e';
 		j = 1;
 		i++;
 	}
-	return (buf);
+	return(buf);
 }
 
-char **ft_tab(int n, int used_points)
+char **ft_tab(int n)
 { 	
 	char *buf;
 	char **tab;
 
-	buf = ft_tab_improved(n, used_points);
+	buf = ft_tab_improved(n);
 	tab = ft_strsplit(buf, '\n');
 	return (tab);
 }

@@ -6,7 +6,7 @@
 /*   By: dhorvill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 14:12:40 by dhorvill          #+#    #+#             */
-/*   Updated: 2017/12/13 13:43:04 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/14 16:06:16 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,14 @@ static t_tetri	ft_fill_tetri(char **tetri, t_tetri tetrimino)
 			}
 			if (tetri[i][j] == '#')
 			{
-				if (tetri[i][j + 1] == '#')
+				if ((tetri[i + 1] && tetri[i + 1][j] == '#' && tetri[i + 1][j - 2] == '#') ||
+						(tetri[i][j - 2] == '#' && tetri[i + 1][j - 2] == '#'))
+				{
+					j = j - 2;
+					i++;
+					tetrimino.coord[k] = 'P';
+				}
+				else if (tetri[i][j + 1] == '#')
 				{
 					j++;
 					tetrimino.coord[k] = 'R';
@@ -99,7 +106,7 @@ static t_tetri	ft_fill_height(t_tetri tetrimino)
 	while (tetrimino.coord[i])
 	{
 		if (tetrimino.coord[i] == 'D' || tetrimino.coord[i] == 'X' ||
-			   	tetrimino.coord[i] == 'Z')
+				tetrimino.coord[i] == 'Z')
 			height++;
 		i++;
 	}
@@ -140,16 +147,16 @@ t_tetri	*ft_ret_tet(char *buf, int ret)
 }
 
 /*int	main(int argc, char **argv)
-{
-	int fd;
-	int ret;
-	char	buf[BUF_SIZE + 1];
-	t_tetri *tetri_tab;
+  {
+  int fd;
+  int ret;
+  char	buf[BUF_SIZE + 1];
+  t_tetri *tetri_tab;
 
-	fd = open(argv[1], O_RDONLY);
-	ret = read(fd, buf, BUF_SIZE);
-	buf[ret] = '\0';
-	tetri_tab = ft_ret_tet(buf, ret);
-	ft_putstr(tetri_tab[11].coord);
-	return (0);
-}*/
+  fd = open(argv[1], O_RDONLY);
+  ret = read(fd, buf, BUF_SIZE);
+  buf[ret] = '\0';
+  tetri_tab = ft_ret_tet(buf, ret);
+  ft_putstr(tetri_tab[11].coord);
+  return (0);
+  }*/
