@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_improved.c                               :+:      :+:    :+:   */
+/*   ft_create_table.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/04 18:41:52 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/18 00:42:42 by dhorvill         ###   ########.fr       */
+/*   Created: 2017/12/19 16:28:08 by ybouzgao          #+#    #+#             */
+/*   Updated: 2017/12/19 17:23:48 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fillit.h"
 
-static void	ft_putstre(char const *c, int n)
+char	**ft_create_table(char *buf, int ret)
 {
-	int i;
-
-	i = 0;
-	while (c[i] && i < n)
-	{
-		if (c[i] != 'e' && i < n)
-			ft_putchar(c[i]);
-		i++;
-	}
-}
-
-void		ft_putstr_improved(char **pdt, int n)
-{
-	int i;
+	int		i;
+	char	new_str[ret];
+	char	**new_table;
 
 	i = -1;
-	while (pdt[++i] && i < n)
+	ft_strcpy(new_str, buf);
+	while (new_str[++i])
 	{
-		ft_putstre(pdt[i], n);
-		if (i < n - 1)
-			ft_putchar('\n');
+		if (new_str[i] == '\n' && new_str[i + 1] == '\n')
+		{
+			new_str[i] = ' ';
+			new_str[i + 1] = ' ';
+		}
 	}
+	new_table = ft_strsplit(new_str, ' ');
+	return (new_table);
 }

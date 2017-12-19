@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:20:50 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/14 18:48:08 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/18 23:28:41 by dhorvill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,29 +42,29 @@ int		size_square(int nbr_tetriminos, int highest_size, int longest_size)
 
 char	*ft_tab_improved(int n)
 {
-	int i;
-	int j;
-	char *buf;
+	int		i;
+	int		j;
+	char	*buf;
 
 	i = 1;
 	j = 0;
-	buf = ft_strnew(12 * 12 + 1);
-	while (i < 12 * 12 - 1)
+	buf = ft_strnew(30 * 30 + 1);
+	while (i < 30 * 30 - 1)
 	{
-		if (i != 0 && i % (12 + j) == 0)
+		if (i != 0 && i % (30 + j) == 0)
 			buf[i - 1] = '\n';
-		else if (i % (12 + j) <= n && i < 12 * n)
+		else if (i % (30 + j) <= n && i < 30 * n)
 			buf[i - 1] = '.';
 		else
 			buf[i - 1] = 'e';
 		j = 1;
 		i++;
 	}
-	return(buf);
+	return (buf);
 }
 
-char **ft_tab(int n)
-{ 	
+char	**ft_tab(int n)
+{
 	char *buf;
 	char **tab;
 

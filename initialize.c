@@ -1,39 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_improved.c                               :+:      :+:    :+:   */
+/*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/04 18:41:52 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/18 00:42:42 by dhorvill         ###   ########.fr       */
+/*   Created: 2017/12/19 18:52:42 by ybouzgao          #+#    #+#             */
+/*   Updated: 2017/12/19 18:55:59 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "fillit.h"
 
-static void	ft_putstre(char const *c, int n)
+t_misc	initialize_s(t_misc s)
 {
-	int i;
-
-	i = 0;
-	while (c[i] && i < n)
-	{
-		if (c[i] != 'e' && i < n)
-			ft_putchar(c[i]);
-		i++;
-	}
-}
-
-void		ft_putstr_improved(char **pdt, int n)
-{
-	int i;
-
-	i = -1;
-	while (pdt[++i] && i < n)
-	{
-		ft_putstre(pdt[i], n);
-		if (i < n - 1)
-			ft_putchar('\n');
-	}
+	s.a = 0;
+	s.b = 0;
+	s.e = 0;
+	s.str = ft_tab(s.n);
+	return (s);
 }

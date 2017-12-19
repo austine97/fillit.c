@@ -6,49 +6,53 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 22:08:24 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/14 17:13:43 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/19 14:38:33 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "fillit.h"
 
-t_misc	ft_findcoord(char **tab, t_misc S, t_tetri tetrimino)
+static t_misc	ft_findcoordbis(int i, int j, int f, t_misc *s)
 {
-	int i;
-	int j;
-	int f;
-
-	i = 0;
-	f = 0;
-	while (i < S.n)
-	{
-		j = 0;
-		while (j < S.n)
-		{
-			if (tab[i][j] == tetrimino.coord[3])
-			{
-				f = 1;
-				break ;
-			}
-			j++;
-		}
-		if (f == 1)
-			break ;
-		i++;
-	}
 	j++;
 	if (f == 0)
 	{
 		i = 0;
 		j = 1;
 	}
-	if (j >= S.n)
+	if (j >= s->n)
 	{
 		j = 0;
 		i++;
 	}
-	S.a = i;
-	S.b = j;
-	return (S);
+	s->a = i;
+	s->b = j;
+	return (*s);
+}
+
+t_misc			ft_findcoord(t_misc *s, t_tetri tetrimino)
+{
+	int i;
+	int j;
+	int f;
+
+	i = -1;
+	f = 0;
+	while (++i < s->n)
+	{
+		j = -1;
+		while (++j < s->n)
+		{
+			if (s->str[i][j] == tetrimino.coord[3])
+			{
+				f = 1;
+				break ;
+			}
+		}
+		if (f == 1)
+			break ;
+	}
+	*s = ft_findcoordbis(i, j, f, s);
+	return (*s);
 }

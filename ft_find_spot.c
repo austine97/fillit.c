@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_improved.c                               :+:      :+:    :+:   */
+/*   ft_find_spot.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/04 18:41:52 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/18 00:42:42 by dhorvill         ###   ########.fr       */
+/*   Created: 2017/12/19 17:29:16 by ybouzgao          #+#    #+#             */
+/*   Updated: 2017/12/19 17:32:55 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "fillit.h"
 
-static void	ft_putstre(char const *c, int n)
+t_misc		ft_find_spot_start(t_tetri tetriminos, t_misc s)
 {
-	int i;
-
-	i = 0;
-	while (c[i] && i < n)
+	s.a = 0;
+	s.b = 0;
+	while (test_position(tetriminos, s) == 1 && s.str[s.a][s.b] != 'e')
 	{
-		if (c[i] != 'e' && i < n)
-			ft_putchar(c[i]);
-		i++;
+		s.b++;
+		s = find_next_point(s);
 	}
+	return (s);
 }
 
-void		ft_putstr_improved(char **pdt, int n)
+t_misc		ft_find_spot(t_tetri tetriminos, t_misc s)
 {
-	int i;
-
-	i = -1;
-	while (pdt[++i] && i < n)
+	while (test_position(tetriminos, s) == 1 && s.str[s.a][s.b] != 'e')
 	{
-		ft_putstre(pdt[i], n);
-		if (i < n - 1)
-			ft_putchar('\n');
+		s.b++;
+		s = find_next_point(s);
 	}
+	return (s);
 }

@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_improved.c                               :+:      :+:    :+:   */
+/*   find_next_point.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/04 18:41:52 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/18 00:42:42 by dhorvill         ###   ########.fr       */
+/*   Created: 2017/12/19 16:16:09 by ybouzgao          #+#    #+#             */
+/*   Updated: 2017/12/19 16:20:47 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fillit.h"
 
-static void	ft_putstre(char const *c, int n)
+t_misc	find_next_point(t_misc s)
 {
-	int i;
-
-	i = 0;
-	while (c[i] && i < n)
+	if (s.str[s.a][s.b] == 'e')
 	{
-		if (c[i] != 'e' && i < n)
-			ft_putchar(c[i]);
-		i++;
+		s.a++;
+		s.b = 0;
 	}
-}
-
-void		ft_putstr_improved(char **pdt, int n)
-{
-	int i;
-
-	i = -1;
-	while (pdt[++i] && i < n)
+	while (s.str[s.a][s.b] != 'e' && s.str[s.a][s.b] != '.')
 	{
-		ft_putstre(pdt[i], n);
-		if (i < n - 1)
-			ft_putchar('\n');
+		while (s.str[s.a + 1][s.b + 1] != 'e' && s.str[s.a][s.b] != '.')
+			s.b++;
+		if (s.str[s.a][s.b] != '.')
+		{
+			s.a++;
+			s.b = 0;
+		}
 	}
+	return (s);
 }

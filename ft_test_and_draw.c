@@ -6,75 +6,56 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 15:53:28 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/14 20:32:47 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/19 17:08:53 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "fillit.h"
 
-t_misc	find_next_point(t_misc S, char **tab)
+t_misc	test_positionbis(t_tetri tetriminos, t_misc s, int k)
 {
-	if (tab[S.a][S.b] == 'e')
+	if (tetriminos.coord[k] == 'P' && s.str[s.a][s.b])
 	{
-		S.a++;
-		S.b = 0;
+		s.b = s.b - 2;
+		s.a++;
 	}
-	while (tab[S.a][S.b] != 'e' && tab[S.a][S.b] != '.')
+	if (tetriminos.coord[k] == 'R' && s.str[s.a][s.b])
+		s.b++;
+	if (tetriminos.coord[k] == 'D' && s.str[s.a][s.b])
+		s.a++;
+	if (tetriminos.coord[k] == 'L' && s.str[s.a][s.b])
+		s.b--;
+	if (tetriminos.coord[k] == 'Z' && s.str[s.a][s.b])
 	{
-		while (tab[S.a + 1][S.b + 1] != 'e' && tab[S.a][S.b] != '.')				
-			S.b++;
-		if (tab[S.a][S.b] != '.')
-		{
-			S.a++;
-			S.b = 0;
-		}
+		s.a++;
+		s.b--;
 	}
-	return (S);
+	if (tetriminos.coord[k] == 'X' && s.str[s.a][s.b])
+	{
+		s.a++;
+		s.b++;
+	}
+	return (s);
 }
 
-int		test_position(t_tetri tetriminos, t_misc S,  char **tab)
+int		test_position(t_tetri tetriminos, t_misc s)
 {
 	int		count;
 	int		k;
-	int		m;
-	int		n;
 
-	k = 0;
-	m = S.a;
-	n = S.b;
+	k = -1;
 	count = 0;
-	while (count <= 3 && tab[m][n])
+	while (s.str[s.a][s.b] && count <= 3)
 	{
-		if (tab[m][n] == '.')
+		if (s.str[s.a][s.b] == '.')
 			count++;
 		else
 			break ;
-		if (k <= 2)
-		{
-			if (tetriminos.coord[k] == 'P' && tab[m][n])
-			{
-				n = n - 2;
-				m++;
-			}
-			if (tetriminos.coord[k] == 'R' && tab[m][n])
-				n++;
-			if (tetriminos.coord[k] == 'D' && tab[m][n])
-				m++;
-			if (tetriminos.coord[k] == 'L' && tab[m][n])
-				n--;
-			if (tetriminos.coord[k] == 'Z' && tab[m][n])
-			{
-				m++;
-				n--;
-			}
-			if (tetriminos.coord[k] == 'X' && tab[m][n])
-			{
-				m++;
-				n++;
-			}
-			k++;
-		}
+		if (++k <= 2)
+			s = test_positionbis(tetriminos, s, k);
+		if (s.a < 0 || s.b < 0)
+			return (1);
 	}
 	if (count == 4)
 		return (0);
@@ -82,43 +63,43 @@ int		test_position(t_tetri tetriminos, t_misc S,  char **tab)
 		return (1);
 }
 
-char	**draw_tetriminos(t_tetri tetriminos, t_misc S,  char **tab)
+t_misc	draw_tetriminosbis(t_tetri tetriminos, t_misc s, int k)
+{
+	if (tetriminos.coord[k] == 'P' && s.str[s.a][s.b])
+	{
+		s.b = s.b - 2;
+		s.a++;
+	}
+	if (tetriminos.coord[k] == 'R' && s.str[s.a][s.b])
+		s.b++;
+	if (tetriminos.coord[k] == 'D' && s.str[s.a][s.b])
+		s.a++;
+	if (tetriminos.coord[k] == 'L' && s.str[s.a][s.b])
+		s.b--;
+	if (tetriminos.coord[k] == 'Z' && s.str[s.a][s.b])
+	{
+		s.a++;
+		s.b--;
+	}
+	if (tetriminos.coord[k] == 'X' && s.str[s.a][s.b])
+	{
+		s.a++;
+		s.b++;
+	}
+	return (s);
+}
+
+char	**draw_tetriminos(t_tetri tetriminos, t_misc s)
 {
 	int k;
-	int m;
-	int n;
 
-	m = S.a;
-	n = S.b;
 	k = 0;
 	while (k <= 3)
-	{	
-		tab[m][n] = tetriminos.coord[3];
+	{
+		s.str[s.a][s.b] = tetriminos.coord[3];
 		if (k <= 2)
-		{
-			if (tetriminos.coord[k] == 'P' && tab[m][n])
-			{
-				n = n - 2;
-				m++;
-			}
-			if (tetriminos.coord[k] == 'R' && tab[m][n])
-				n++;
-			if (tetriminos.coord[k] == 'D' && tab[m][n])
-				m++;
-			if (tetriminos.coord[k] == 'L' && tab[m][n])
-				n--;
-			if (tetriminos.coord[k] == 'Z' && tab[m][n])
-			{
-				m++;
-				n--;
-			}
-			if (tetriminos.coord[k] == 'X' && tab[m][n])
-			{
-				m++;
-				n++;
-			}
-		}
+			s = draw_tetriminosbis(tetriminos, s, k);
 		k++;
 	}
-	return (tab);
+	return (s.str);
 }

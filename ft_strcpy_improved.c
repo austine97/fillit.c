@@ -1,39 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_improved.c                               :+:      :+:    :+:   */
+/*   ft_strcpy_improved.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/04 18:41:52 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/18 00:42:42 by dhorvill         ###   ########.fr       */
+/*   Created: 2017/12/19 14:11:14 by ybouzgao          #+#    #+#             */
+/*   Updated: 2017/12/19 14:11:33 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-static void	ft_putstre(char const *c, int n)
+char	**ft_strcpy_improved(char **dest, char **tab, t_misc s)
 {
 	int i;
+	int j;
 
 	i = 0;
-	while (c[i] && i < n)
-	{
-		if (c[i] != 'e' && i < n)
-			ft_putchar(c[i]);
+	while (tab[i])
 		i++;
-	}
-}
-
-void		ft_putstr_improved(char **pdt, int n)
-{
-	int i;
-
+	if ((dest = malloc(sizeof(char*) * (i + 1))) == NULL)
+		return (NULL);
 	i = -1;
-	while (pdt[++i] && i < n)
+	while (++i < s.n)
 	{
-		ft_putstre(pdt[i], n);
-		if (i < n - 1)
-			ft_putchar('\n');
+		j = 0;
+		while (j < s.n)
+			j++;
+		if ((dest[i] = malloc(sizeof(char*) * (j + 1))) == NULL)
+			return (NULL);
 	}
+	i = -1;
+	while (tab[++i])
+	{
+		j = -1;
+		while (tab[i][++j])
+			dest[i][j] = tab[i][j];
+	}
+	return (dest);
 }

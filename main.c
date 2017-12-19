@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:53:35 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/14 18:33:37 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/19 15:51:52 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,30 @@
 
 int		main(int argc, char **argv)
 {
-	int		fd;
-	int		ret;
 	char	buf[BUF_SIZE + 1];
 	char	**pdt;
+	int		i;
 	t_tetri *listtetri;
-	t_misc	S;
+	t_misc	s;
 
-	S.a = 0;
-	S.b = 0;
-	S.c = 0;
-	S.d = 0;
-	S.e = -1;
-	fd = open(argv[1], O_RDONLY);
-	ret = read(fd, buf, BUF_SIZE);
-	buf[ret] = '\0';
-	if ((pdt = ft_create_table(buf, ret)) == 0)
+	s.d = 0;
+	i = open(argv[1], O_RDONLY);
+	if ((s.b = read(i, buf, BUF_SIZE)) == -1)
+	{
+		ft_putstr("error\n");
+		return (-1);
+	}
+	buf[s.b] = '\0';
+	if ((pdt = ft_create_table(buf, s.b)) == 0)
 		return (0);
 	if (check_valid(argc, argv) == 1)
 		return (1);
-	listtetri = ft_ret_tet(buf, ret);
-	ret = ft_find_longest(pdt);
-	fd = ft_find_highest(pdt);
-	S.n = size_square(listtetri[0].nbr, fd, ret);
-	pdt = resolve_recursive(S, listtetri);
-	ft_putstr_improved(pdt, S.n + 1);
+	listtetri = ft_ret_tet(buf, s.b);
+	s.b = ft_find_longest(pdt);
+	s.a = ft_find_highest(pdt);
+	s.n = size_square(listtetri[0].nbr, s.a, s.b);
+	pdt = resolve_recursive(s, listtetri);
+	ft_putstr_improved(pdt, s.n + 1);
+	close(i);
 	return (0);
 }
