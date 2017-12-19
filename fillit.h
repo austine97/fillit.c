@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 16:53:30 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/19 18:53:39 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/19 18:59:57 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_misc			ft_findcoord(t_misc *s, t_tetri tetrimino);
 void			ft_erase(char **tab, t_tetri tetrimino);
 char			**ft_create_table(char *buf, int ret);
 int				usager(void);
-t_misc			initialize_s(t_misc);
+t_misc			initialize_s(t_misc s);
 
 int				ft_sqrt_improved(int nb);
 int				size_square(int nbr_tetriminos,
@@ -58,8 +58,8 @@ t_misc			find_next_point(t_misc s);
 int				test_position(t_tetri tetriminos, t_misc s);
 char			**draw_tetriminos(t_tetri tetriminos, t_misc s);
 char			**ft_strcpy_improved(char **dest, t_misc s);
-t_misc			ft_find_spot(t_tetri tetriminos,  t_misc s);
-t_misc			ft_find_spot_start(t_tetri tetriminos,  t_misc s);
+t_misc			ft_find_spot(t_tetri tetriminos, t_misc s);
+t_misc			ft_find_spot_start(t_tetri tetriminos, t_misc s);
 t_misc			ft_double_test(t_misc s, t_tetri *tetriminos);
 char			**combination_recursive(t_tetri *tetriminos,
 		t_misc *s);

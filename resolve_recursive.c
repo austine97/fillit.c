@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 16:19:50 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/19 18:54:51 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/19 19:10:09 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,7 @@ char			**resolve_recursive(t_misc s, t_tetri *tetriminos)
 		if (s.str == NULL)
 		{
 			s.n++;
-			s.str = resolve_recursive(s, tetriminos);
-			return (s.str);
+			return (resolve_recursive(s, tetriminos));
 		}
 		else
 		{
