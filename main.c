@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/04 16:53:35 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/19 15:51:52 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/20 13:18:22 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 #include "fillit.h"
 #include <fcntl.h>
 
-int		main(int argc, char **argv)
+static int	empty(void)
+{
+	ft_putstr("error\n");
+	return (-1);
+}
+
+int			main(int argc, char **argv)
 {
 	char	buf[BUF_SIZE + 1];
 	char	**pdt;
@@ -25,10 +31,7 @@ int		main(int argc, char **argv)
 	s.d = 0;
 	i = open(argv[1], O_RDONLY);
 	if ((s.b = read(i, buf, BUF_SIZE)) == -1)
-	{
-		ft_putstr("error\n");
-		return (-1);
-	}
+		return (empty());
 	buf[s.b] = '\0';
 	if ((pdt = ft_create_table(buf, s.b)) == 0)
 		return (0);

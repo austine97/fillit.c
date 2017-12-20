@@ -6,7 +6,7 @@
 /*   By: ybouzgao <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/28 16:19:50 by ybouzgao          #+#    #+#             */
-/*   Updated: 2017/12/19 19:10:09 by ybouzgao         ###   ########.fr       */
+/*   Updated: 2017/12/20 13:34:28 by ybouzgao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ char			**resolve_recursive(t_misc s, t_tetri *tetriminos)
 	s = initialize_s(s);
 	while (s.e < tetriminos[0].nbr - 1)
 	{
+		if (ft_optimization(tetriminos, s) == 1)
+			s.n++;
 		s = extra_condition(s);
 		if (s.a >= s.n)
 		{
